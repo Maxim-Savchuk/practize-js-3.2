@@ -50,3 +50,25 @@ const allStudents = [
   'Salena Nail',
   'Tanner Clapper',
 ];
+
+const searchBox = document.querySelector('.search-box');
+const studentList = document.querySelector('.student-list');
+
+populateStudentList(allStudents);
+
+const throttleonSearch = _.throttle(onSearch, 300);
+searchBox.addEventListener('input', throttleonSearch);
+
+function onSearch() {
+  const filter = searchBox.value.toLowerCase();
+  const visibleStudents = allStudents.filter(student =>
+    student.toLowerCase().includes(filter)
+  );
+
+  populateStudentList(visibleStudents);
+}
+
+function populateStudentList(students) {
+  const markup = students.map(student => `<li>${student}</li>`).join('');
+  studentList.innerHTML = markup;
+}
